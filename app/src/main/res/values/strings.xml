@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RMAHelper</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="products">Products</string>
+    <string name="companies">Companies</string>
+    <string name="invoice">Invoice</string>
+    <string name="search_by">Search by</string>
+</resources>
