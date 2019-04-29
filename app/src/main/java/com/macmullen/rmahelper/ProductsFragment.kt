@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -54,7 +55,6 @@ class ProductsFragment : Fragment() {
 
         mRecyclerView.layoutManager = mLayoutmanager
         mRecyclerView.adapter = mAdapter
-
         var fab = activity!!.findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fab.setOnClickListener {
             Toast.makeText(activity!!.applicationContext, "To be implemented", Toast.LENGTH_LONG).show()

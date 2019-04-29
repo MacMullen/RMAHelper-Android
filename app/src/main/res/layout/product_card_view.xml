@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent" android:padding="50dp"
-		android:layout_height="120dp" android:layout_marginTop="3dp"
+		android:layout_width="match_parent"
+		android:layout_height="120dp"
+		app:cardCornerRadius="0dp"
 >
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_margin="4dp" android:layout_marginTop="30dp" android:layout_marginBottom="30dp"
+			android:background="@color/bg_grey"
 			android:id="@+id/relativeLayout">
 		<ImageView android:layout_width="35dp" android:layout_height="42dp" android:padding="2dp"
 		           android:id="@+id/iconView" app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +30,14 @@
 				android:layout_marginBottom="8dp"
 				app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.207"
 				app:layout_constraintStart_toEndOf="@+id/iconView" android:layout_marginStart="40dp"/>
+		<View
+				android:id="@+id/divider"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/grey"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="@+id/lineView"
+		/>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
