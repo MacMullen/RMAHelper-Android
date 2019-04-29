@@ -2,41 +2,73 @@ package com.macmullen.rmahelper
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_products.*
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var drawer: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(findViewById(R.id.mainToolbar))
 
-        var viewPager = findViewById<ViewPager>(R.id.mainViewPager)
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-
-        var tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.home)))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.products)))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.companies)))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.invoice)))
-        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-
-        viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager!!.currentItem = tab.position
+        drawer = findViewById(R.id.drawer_layout)
+        var navigationView: NavigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    HomeFragment.newInstance(),
+                    "Products"
+                ).commit()
+                R.id.nav_products -> supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    ProductsFragment.newInstance(),
+                    "Products"
+                ).commit()
+                R.id.nav_companies -> supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    CompaniesFragment.newInstance(),
+                    "Products"
+                ).commit()
             }
+            drawer.closeDrawer(GravityCompat.START)
+            true
+        }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment.newInstance(), "Products").commit()
+            navigationView.setCheckedItem(R.id.nav_home)
+        }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
+        var toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawer,
+            mainToolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
+    override fun onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

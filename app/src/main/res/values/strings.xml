@@ -6,4 +6,6 @@
     <string name="companies">Companies</string>
     <string name="invoice">Invoice</string>
     <string name="search_by">Search by</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
