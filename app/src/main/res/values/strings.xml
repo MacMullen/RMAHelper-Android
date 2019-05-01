@@ -17,4 +17,7 @@
 	<string name="company">Company</string>
 	<string name="item_saved">Product saved</string>
 	<string name="save">Save</string>
+	<string name="accessory_list">Accessory list</string>
+	<string name="new_product">New product</string>
+	<string name="insert_failed">Product was not saved</string>
 </resources>

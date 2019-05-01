@@ -1,7 +1,9 @@
 package com.macmullen.rmahelper
 
 
+import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,8 +19,8 @@ import java.util.*
 
 class ProductsFragment : Fragment() {
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mAdapter: RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>
-    private lateinit var mLayoutmanager: RecyclerView.LayoutManager
+    private lateinit var mAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>
+    private var GET_NEW_PRODUCTS = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,54 +31,42 @@ class ProductsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        var exampleList = mutableListOf<ProductCardView>()
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "TAB024C", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "TAB024B", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "TAB0032", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "TAB032B", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_smartphone_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_smartphone_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_smartphone_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_smartphone_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_smartphone_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
-        exampleList.add(ProductCardView(R.drawable.ic_tablet_black_24dp, "Line1", "GADNIC"))
+        activity!!.title = resources.getString(R.string.products)
 
         mRecyclerView = activity!!.findViewById(R.id.productsRecyclerView)
         mRecyclerView.setHasFixedSize(true)
-        mLayoutmanager = LinearLayoutManager(context)
-        mAdapter = RecyclerViewAdapter(exampleList.toList())
-
-        activity!!.title = "Products"
-
-        mRecyclerView.layoutManager = mLayoutmanager
-        mRecyclerView.addItemDecoration(LayoutMarginDecoration(1, -1))
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mAdapter = context?.let { ProductAdapter(it, getAllItems()) }!!
         mRecyclerView.adapter = mAdapter
+
         var fab = activity!!.findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fab.setOnClickListener {
             val intent = Intent(activity, AddProductActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, GET_NEW_PRODUCTS)
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode == GET_NEW_PRODUCTS) {
+            if (resultCode == Activity.RESULT_OK) {
+                mAdapter = context?.let { ProductAdapter(it, getAllItems()) }!!
+                mRecyclerView.adapter = mAdapter
+            }
+        }
+    }
 
     companion object {
         fun newInstance(): ProductsFragment {
             return ProductsFragment()
         }
+    }
+
+    private fun getAllItems(): Cursor {
+        return context?.let {
+            DatabaseHandler(it).writableDatabase.query(
+                PRODUCTS_TABLE_NAME, null, null, null, null, null,
+                COL_BRAND
+            )
+        }!!
     }
 }

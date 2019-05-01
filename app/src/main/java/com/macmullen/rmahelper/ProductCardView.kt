@@ -16,5 +16,4 @@ class ProductCardView(imageResource: Int, model: String, brand: String) {
     fun getModel(): String {
         return modelLine
     }
-
 }

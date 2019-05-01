@@ -1,9 +1,10 @@
 package com.macmullen.rmahelper
 
-class Product constructor(brand: String, model: String, dist_company: String, accessories: List<String>) {
+class Product constructor(brand: String, model: String, dist_company: String, ean: String, accessories: String) {
     var brand = brand
     var model = model
     var dist_company = dist_company
+    var ean = ean
     var accessories = accessories
 }
 

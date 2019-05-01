@@ -18,4 +18,7 @@
 	<string name="save">Guardar</string>
 	<string name="scan">Escanear</string>
 	<string name="search_by">Buscar por</string>
+	<string name="accessory_list">Lista de accessorios</string>
+	<string name="new_product">Nuevo producto</string>
+	<string name="insert_failed">El producto no ha sido guardado</string>
 </resources>
