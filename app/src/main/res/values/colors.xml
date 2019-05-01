@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#283593</color>
-    <color name="colorPrimaryDark">#001064</color>
-    <color name="colorAccent">#3d5afe</color>
+	<color name="colorPrimary">#212121</color>
+	<color name="colorPrimaryDark">#000000</color>
+	<color name="colorAccent">#6200ea</color>
     <color name="white">#fafafa</color>
-	<color name="bg_grey">#A4FAFAFA</color>
-	<color name="grey">#DEDEDE</color>
+	<color name="divider_grey">#DEDEDE</color>
+	<color name="icon_grey">#747474</color>
 </resources>

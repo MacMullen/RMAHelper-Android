@@ -1,11 +1,20 @@
 <resources>
-    <string name="app_name">RMAHelper</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">Home</string>
-    <string name="products">Products</string>
-    <string name="companies">Companies</string>
-    <string name="invoice">Invoice</string>
-    <string name="search_by">Search by</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="app_name">RMAHelper</string>
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="home">Home</string>
+	<string name="products">Products</string>
+	<string name="companies">Companies</string>
+	<string name="invoice">Invoice</string>
+	<string name="search_by">Search by</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="brand">Brand</string>
+	<string name="model">Model</string>
+	<string name="ean">EAN</string>
+	<string name="scan">Scan</string>
+	<string name="accessories">Accessories</string>
+	<string name="add">Add</string>
+	<string name="company">Company</string>
+	<string name="item_saved">Product saved</string>
+	<string name="save">Save</string>
 </resources>

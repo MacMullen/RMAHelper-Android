@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">RMAHelper</string>
+	<string name="accessories">Accesorios</string>
+	<string name="add">Añadir</string>
+	<string name="brand">Marca</string>
+	<string name="companies">Companias</string>
+	<string name="company">Compania</string>
+	<string name="ean">EAN</string>
+	<string name="hello_blank_fragment">Hola fragmento vacio</string>
+	<string name="home">Inicio</string>
+	<string name="invoice">Remito</string>
+	<string name="item_saved">Producto guardado</string>
+	<string name="model">Modelo</string>
+	<string name="navigation_drawer_close">Cerrar el panel de navegacion</string>
+	<string name="navigation_drawer_open">Abrir el panel de navegacion</string>
+	<string name="products">Productos</string>
+	<string name="save">Guardar</string>
+	<string name="scan">Escanear</string>
+	<string name="search_by">Buscar por</string>
+</resources>

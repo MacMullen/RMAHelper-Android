@@ -1,6 +1,5 @@
 package com.macmullen.rmahelper;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView mImageView;
-        public TextView mline;
+        public TextView mModelLine;
+        public TextView mBrandLine;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.iconView);
-            mline = itemView.findViewById(R.id.lineView);
+            mModelLine = itemView.findViewById(R.id.modelText);
+            mBrandLine = itemView.findViewById(R.id.brandText);
         }
     }
 
@@ -44,7 +45,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ProductCardView currentItem = mProductList.get(position);
 
         holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mline.setText(currentItem.getLine1());
+        holder.mModelLine.setText(currentItem.getModel());
+        holder.mBrandLine.setText(currentItem.getBrand());
     }
 
     @Override

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, HomeFragment.newInstance(), "Products").commit()
+                .replace(R.id.fragment_container, ProductsFragment.newInstance(), "Products").commit()
             navigationView.setCheckedItem(R.id.nav_home)
         }
 
