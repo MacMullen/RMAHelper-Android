@@ -2,8 +2,10 @@ package com.macmullen.rmahelper
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -14,10 +16,14 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_add_product.*
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import com.squareup.picasso.Picasso
+
 
 class AddProductActivity : AppCompatActivity() {
 
     var accList: String = ""
+    var imageUriString: Uri = Uri.EMPTY
+    private val PICK_IMAGE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,15 +49,38 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         this.saveNewProductButton.setOnClickListener {
+            var wrong_field: Boolean = false
+            if (brandInputText.text.toString().trim().toLowerCase() == "".toLowerCase()) {
+                brandInputLayout.error = resources.getString(R.string.required)
+                wrong_field = true
+            } else {
+                brandInputLayout.error = ""
+            }
+            if (modelInputText.text.toString().trim().toLowerCase() == "".toLowerCase()) {
+                modelInputLayout.error = resources.getString(R.string.required)
+                wrong_field = true
+            } else {
+                modelInputLayout.error = ""
+            }
+            if (companySpinner.text.toString().trim().toLowerCase() == "".toLowerCase()) {
+                companySpinner.error = resources.getString(R.string.required)
+                wrong_field = true
+            } else {
+                companySpinner.setError("", null)
+            }
+            when (wrong_field) {
+                true -> return@setOnClickListener
+            }
             val op_result = db.insertProduct(
                 Product(
                     brandInputText.text.toString(),
                     modelInputText.text.toString(),
                     companySpinner.text.toString(),
                     eanInputText.text.toString(),
-                    accList
+                    accList, imageUriString
                 )
             )
+            addProductImageVIew.setImageResource(R.drawable.ic_image_black_24dp)
             this.brandInputText.setText("")
             this.modelInputText.setText("")
             this.eanInputText.setText("")
@@ -81,6 +110,17 @@ class AddProductActivity : AppCompatActivity() {
                 false
             }
         }
+
+        this.addProductImageVIew.setOnClickListener {
+            openGallery()
+        }
+    }
+
+    override fun onBackPressed() {
+        val resultIntent = Intent()
+        intent.putExtra("keyName", "YOLO")
+        setResult(Activity.RESULT_OK, resultIntent)
+        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -88,7 +128,8 @@ class AddProductActivity : AppCompatActivity() {
             val resultIntent = Intent()
             intent.putExtra("keyName", "YOLO")
             setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+            onBackPressed()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
@@ -115,8 +156,11 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE && data != null) {
+            imageUriString = data.data
+            Picasso.get().load(data.data).noPlaceholder().fit().centerInside().into((this.addProductImageVIew))
+        }
+        val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         if (result != null) {
             if (result.contents != null) {
@@ -129,4 +173,8 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
+    fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE)
+    }
 }

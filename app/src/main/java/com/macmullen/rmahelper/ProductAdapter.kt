@@ -1,13 +1,18 @@
 package com.macmullen.rmahelper
 
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_add_product.*
 
 class ProductAdapter constructor(context: Context, cursor: Cursor) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -36,20 +41,24 @@ class ProductAdapter constructor(context: Context, cursor: Cursor) :
         }
         val brand = mCursor.getString(mCursor.getColumnIndex(COL_BRAND))
         val model = mCursor.getString(mCursor.getColumnIndex(COL_MODEL))
+        val image = mCursor.getString(mCursor.getColumnIndex(COL_IMAGEVIEW))
 
         holder.mBrandLine.text = brand
         holder.mModelLine.text = model
-        holder.mImageView.setImageResource(R.drawable.ic_tablet_black_24dp)
+        Picasso.get().load(image).noPlaceholder().fit().centerInside().into((holder.mImageView))
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(mContext, ViewProductActivity::class.java)
+            intent.putExtra("product_id", position)
+            mContext.startActivity(intent)
+        }
     }
 
     fun swapCursor(newCursor: Cursor) {
-        if (mCursor != null) {
-            mCursor.close()
-        }
+        mCursor.close()
         mCursor = newCursor
-        if (newCursor != null) {
-            notifyDataSetChanged()
-        }
-
+        notifyDataSetChanged()
     }
+
+
 }

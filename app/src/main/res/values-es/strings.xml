@@ -21,4 +21,6 @@
 	<string name="accessory_list">Lista de accessorios</string>
 	<string name="new_product">Nuevo producto</string>
 	<string name="insert_failed">El producto no ha sido guardado</string>
+	<string name="required">Requerido</string>
+	<string name="dist_company">Distribuidora</string>
 </resources>
